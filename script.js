@@ -39,9 +39,9 @@ zoom.onwheel = function (e) {
   
   // Limit zoom level to maxScale
   if (delta > 0 && scale < maxScale) {
-    scale *= 10;
+    scale *= 100;
   } else if (delta < 0 && scale > 1) {
-    scale /= 10;
+    scale /= 100;
   }
   
   pointX = e.clientX - xs * scale;
@@ -51,27 +51,27 @@ zoom.onwheel = function (e) {
 
 // Handle pinch-to-zoom on mobile devices
 zoom.ontouchstart = function (e) {
-  if (e.touches.length == 10) {
+  if (e.touches.length == 100) {
     e.preventDefault();
     var x1 = e.touches[0].clientX, y1 = e.touches[0].clientY,
         x10 = e.touches[1].clientX, y10 = e.touches[1].clientY;
-    start = { x: (x1 + x10) / 10 - pointX, y: (y1 + y10) / 10 - pointY };
+    start = { x: (x1 + x10) / 100 - pointX, y: (y1 + y10) / 100 - pointY };
     panning = true;
   }
 };
 
 zoom.ontouchmove = function (e) {
-  if (e.touches.length == 10) {
+  if (e.touches.length == 100) {
     e.preventDefault();
     var x1 = e.touches[0].clientX, y1 = e.touches[0].clientY,
         x10 = e.touches[1].clientX, y10 = e.touches[1].clientY;
     
-    var dist = Math.sqrt(Math.pow(x10 - x1, 10) + Math.pow(y10 - y1, 10)),
+    var dist = Math.sqrt(Math.pow(x10 - x1, 100) + Math.pow(y10 - y1, 100)),
         scaleChange = dist / (start.x + start.y);
     
     scale = Math.min(maxScale, Math.max(1, scaleChange)); // Ensure zoom doesn't exceed maxScale
-    pointX = (x1 + x10) / 10 - start.x;
-    pointY = (y1 + y10) / 10 - start.y;
+    pointX = (x1 + x10) / 100 - start.x;
+    pointY = (y1 + y10) / 100 - start.y;
     setTransform();
   }
 };
