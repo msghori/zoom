@@ -34,7 +34,7 @@ var scale = 1,
         var xs = (e.clientX - pointX) / scale,
           ys = (e.clientY - pointY) / scale,
           delta = (e.wheelDelta ? e.wheelDelta : -e.deltaY);
-        (delta > 0) ? (scale *= 1.5) : (scale /= 1.5);
+        (delta > 0) ? (scale *= 1.9) : (scale /= 1.9);
         pointX = e.clientX - xs * scale;
         pointY = e.clientY - ys * scale;
 
