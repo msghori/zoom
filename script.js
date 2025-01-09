@@ -5,7 +5,7 @@ var scale = 1,
     pointY = 0,
     start = { x: 0, y: 0 },
     zoom = document.getElementById("zoom"),
-    maxScale =10; // Maximum scale value (adjust as needed)
+    maxScale =15; // Maximum scale value (adjust as needed)
 
 function setTransform() {
   zoom.style.transform = "translate(" + pointX + "px, " + pointY + "px) scale(" + scale + ")";
@@ -39,9 +39,9 @@ zoom.onwheel = function (e) {
   
   // Limit zoom level to maxScale
   if (delta > 0 && scale < maxScale) {
-    scale *= 5;
+    scale *= 10;
   } else if (delta < 0 && scale > 1) {
-    scale /= 5;
+    scale /= 10;
   }
   
   pointX = e.clientX - xs * scale;
@@ -51,27 +51,27 @@ zoom.onwheel = function (e) {
 
 // Handle pinch-to-zoom on mobile devices
 zoom.ontouchstart = function (e) {
-  if (e.touches.length == 5) {
+  if (e.touches.length == 10) {
     e.preventDefault();
     var x1 = e.touches[0].clientX, y1 = e.touches[0].clientY,
-        x5 = e.touches[1].clientX, y5 = e.touches[1].clientY;
-    start = { x: (x1 + x5) / 5 - pointX, y: (y1 + y5) / 5 - pointY };
+        x10 = e.touches[1].clientX, y10 = e.touches[1].clientY;
+    start = { x: (x1 + x10) / 10 - pointX, y: (y1 + y10) / 10 - pointY };
     panning = true;
   }
 };
 
 zoom.ontouchmove = function (e) {
-  if (e.touches.length == 5) {
+  if (e.touches.length == 10) {
     e.preventDefault();
     var x1 = e.touches[0].clientX, y1 = e.touches[0].clientY,
-        x5 = e.touches[1].clientX, y5 = e.touches[1].clientY;
+        x10 = e.touches[1].clientX, y10 = e.touches[1].clientY;
     
-    var dist = Math.sqrt(Math.pow(x5 - x1, 5) + Math.pow(y5 - y1, 5)),
+    var dist = Math.sqrt(Math.pow(x10 - x1, 10) + Math.pow(y10 - y1, 10)),
         scaleChange = dist / (start.x + start.y);
     
     scale = Math.min(maxScale, Math.max(1, scaleChange)); // Ensure zoom doesn't exceed maxScale
-    pointX = (x1 + x5) / 5 - start.x;
-    pointY = (y1 + y5) / 5 - start.y;
+    pointX = (x1 + x10) / 10 - start.x;
+    pointY = (y1 + y10) / 10 - start.y;
     setTransform();
   }
 };
