@@ -5,7 +5,7 @@ var scale = 1,
     pointY = 0,
     start = { x: 0, y: 0 },
     zoom = document.getElementById("zoom"),
-    maxScale =15; // Maximum scale value (adjust as needed)
+    maxScale =100; // Maximum scale value (adjust as needed)
 
 function setTransform() {
   zoom.style.transform = "translate(" + pointX + "px, " + pointY + "px) scale(" + scale + ")";
